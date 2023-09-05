@@ -56,6 +56,8 @@ Answer here:
 
 String → Nat
 
+-/
+
 /-!
 ## 2: Define a Boolean operation
 The *implies* function from Boolean algebra takes 
@@ -71,7 +73,11 @@ Hint: Review the notes to see how we define several
 similar Boolean operators, such as *xor* and *nor*. 
 -/
 
-
+def imp : Bool → Bool → Bool
+  | true, false => false
+  | true, true => true
+  | false, true => true
+  | false, false => true
 
 
 /-!
@@ -85,7 +91,10 @@ end of each #eval line, as we've done in class.
 -/
 
 -- Write your answers here:
-#eval _   -- etc
+#eval imp true true  -- should be true
+#eval imp true false --  should be false
+#eval imp false true -- should be true
+#eval imp false false --should be true
 
 /-!
 ## 4. Glue together two compatible functions
@@ -144,8 +153,8 @@ right, the following test cases should pass.
 -/
 
 -- Now complete the implementation of glue_funs'
-def glue_funs' : _
-| _ => _
+def glue_funs' : (Nat → Bool) → (String → Nat) → String → Bool 
+| g, f, s => g (f s)
 
 #eval glue_funs' isEven String.length "Hello"  -- false
 #eval glue_funs' isEven String.length "Hello!" -- true
@@ -190,8 +199,8 @@ of the type arguments are implicit and inferred.
 -/
 
 -- Implement glue_funs here
-def glue_funs : _
-| _ => _
+def glue_funs {α β γ : Type} : (β → γ) → (α → β) → α → γ
+| g, f, a => g (f a)
 
 -- test cases
 #eval glue_funs isEven String.length "Hello"  -- false
@@ -211,8 +220,12 @@ as applying square after double?
 -/
 
 -- Copy the double and square functions here
+def double : Nat → Nat 
+|n => 2 * n
 
+def square : Nat → Nat
+| n => n^2
 -- Write your tests here; include expected results
 
-#eval _
-#eval _
+#eval glue_funs double square 5
+#eval glue_funs square double 5
