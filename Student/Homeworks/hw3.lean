@@ -174,7 +174,7 @@ Consider the outputs of the following #check commands.
 Is × left associative or right associative? Briefly explain
 how you reached your answer.
 
-Answer here: It is right associative since the parentheses show up when they are around 
+Answer here: I believe that it is right associative since the parentheses show up when they are around 
 the two leftmost terms as they do with the → operator. 
 
 ### B.
