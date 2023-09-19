@@ -139,8 +139,8 @@ of definition.
 def sum_comm { α β : Type} : α ⊕ β → β ⊕ α :=
 fun s => 
   match s with
-  | _ => _
-  | _ => _
+  |  Sum.inl a => Sum.inr a
+  |  Sum.inr b => Sum.inl b
 
 /-!
 Can you always convert a term of type *β ⊗ α* into 
@@ -254,7 +254,12 @@ type *wet*.
 
 -- Here
 
-def its_wet {α β γ : Type} 
+def its_wet (osum: rain ⊕ sprinkler) (rain2wet : rain → wet) (spr2wet: sprinkler → wet) : wet :=
+match osum with
+| Sum.inl a => rain2wet a
+| Sum.inr b => spr2wet b
+
+
 
 /-!
 Now rewrite your function using the type names,
@@ -263,6 +268,13 @@ Now rewrite your function using the type names,
 -/
 
 -- Here:
+
+def sum_elim {α β γ : Type} (osum : α ⊕ β) (rain2wet : α → γ) (spr2wet : β → γ) : γ :=
+match osum with
+| Sum.inl a => rain2wet a
+| Sum.inr b => spr2wet b
+
+
 
 /-!
 You should now better understand how to program 
